@@ -1,16 +1,26 @@
 # fmverse
 
-`fmverse` 在 R 中加载并运行预训练单细胞基础模型，为不同模型提供统一的推理和下游分析接口。
+`fmverse` runs selected pretrained single-cell foundation models in R and provides a shared interface for embeddings and downstream analyses.
 
-## 原理
+## How it works
 
-用户将模型 checkpoint 及其推理资源放在同一目录中。目录内的 `fmverse.json` 声明模型类型、版本和所需文件；`fmverse()` 据此选择对应的 R 实现，通过 torch for R 加载权重并计算细胞 embedding。运行结果保存在 S4 `fmobj` 中。推理在 R 内执行，不依赖 Python 或 reticulate。
+Each checkpoint is stored in a model directory with an `fmverse.json` manifest. The manifest identifies the model, checkpoint, and required files. `fmverse()` reads that metadata, loads the checkpoint into a native R `torch` implementation, and stores the run in an S4 `fmobj`. The package does not use Python or `reticulate` for inference. Model weights are distributed separately and are not included in the R package.
 
-模型目录需要包含 `fmverse.json` 和该文件列出的全部资源。模型权重不随 R 包发布。
+## Supported models
 
-## 环境与安装
+| Model | Parameters / checkpoint options | Training data | Description |
+| --- | --- | --- | --- |
+| **scGPT** | `whole-human`, `continual-pretrained`, `brain`, `blood`, `heart`, `lung`, `kidney`, `pan-cancer` | `whole-human`: 33M normal human cells; tissue/cancer checkpoints: brain 13.2M, blood and bone marrow 10.3M, heart 1.8M, lung 2.1M, kidney 814K, and pan-cancer 5.7M cells. `continual-pretrained` starts from whole-human and adds a supervised cell-type stage using Tabula Sapiens. | Gene-expression token Transformer. The whole-human checkpoint is a general-purpose option; tissue-specific checkpoints match their corresponding context. [Project](https://github.com/bowang-lab/scGPT) · [continual-pretraining tutorial](https://github.com/bowang-lab/scGPT/tree/main/tutorials/zero-shot) |
+| **Geneformer** | `Geneformer-V1-10M` (10M parameters); `Geneformer-V2-104M` (104M); `Geneformer-V2-316M` (316M); `Geneformer-V2-104M_CLcancer` (104M) | V1: Genecorpus-30M (~30M human transcriptomes); V2: Genecorpus-104M (~104M non-cancer human transcriptomes); cancer variant: continued training on ~14M cancer transcriptomes. | Human rank-value Transformer. V1 uses up to 2,048 tokens; V2 uses up to 4,096. [Official model card](https://huggingface.co/ctheodoris/Geneformer) |
+| **scBERT** | `panglao-human` (6 layers; 200-dimensional hidden representation) | PanglaoDB single-cell collection; the supported checkpoint uses a human 16,906-gene index. | Performer-based masked-gene pretraining for cell representation and annotation. [Paper](https://www.nature.com/articles/s42256-022-00534-z) · [code](https://github.com/TencentAILabHealthcare/scBERT) |
+| **scFoundation** | `01B-resolution` (100M parameters) | More than 50M human single-cell transcriptomic profiles. | xTrimoGene encoder-decoder; uses a fixed 19,264-gene index and supports cell-level embeddings. [Official project](https://github.com/biomap-research/scFoundation) |
+| **UCE** | `4layer` example; `33layer` flagship (>650M parameters) | Integrated Mega-scale Atlas: over 36M cells from more than 300 datasets, spanning eight species. | Cross-species cell embedding using ESM2 protein embeddings and genomic positions. Supported species: human, mouse, frog, zebrafish, mouse lemur, pig, crab-eating macaque, and rhesus macaque. [Paper](https://www.nature.com/articles/s41586-026-10689-z) · [code](https://github.com/snap-stanford/UCE) |
 
-需要 R 4.3.0 或更高版本、Seurat 5 和 torch for R。安装 torch 后按提示重启 R 会话。
+The two legacy Geneformer folder identifiers `gf-12L-95M-i4096` and `geneformer-12L-30M` remain accepted for compatibility; the four named Geneformer releases above are the core catalog.
+
+## Installation
+
+Requirements: R 4.3.0 or later, Seurat 5, and torch for R. Install the torch runtime once and follow any platform-specific prompts.
 
 ```r
 install.packages(c("remotes", "torch"))
@@ -19,11 +29,11 @@ torch::install_torch()
 remotes::install_github("mumdark/fmverse")
 ```
 
-torch 安装说明见 [torch for R installation guide](https://torch.mlverse.org/docs/articles/installation)。
+See the [torch for R installation guide](https://torch.mlverse.org/docs/articles/installation) for platform-specific setup.
 
-## 示例
+## Example
 
-以下示例假设 `pbmc` 是 Seurat v4 或 v5 对象，且模型目录已下载并包含完整资源：
+This example assumes `pbmc` is a Seurat v4 or v5 object and that the selected model directory has been downloaded with its required files and `fmverse.json` manifest.
 
 ```r
 library(fmverse)
@@ -39,41 +49,25 @@ obj <- fmverse(
 fm_runs(obj)
 embedding <- fm_embeddings(obj, run_id = "scgpt_pbmc")
 
-obj <- fm_cluster(
-  obj,
-  run_id = "scgpt_pbmc",
-  method = "louvain"
-)
-
-p <- fm_plot(
-  obj,
-  run_id = "scgpt_pbmc",
-  task = "cluster",
-  plot = "umap"
-)
+obj <- fm_cluster(obj, run_id = "scgpt_pbmc", method = "louvain")
+p <- fm_plot(obj, run_id = "scgpt_pbmc", task = "cluster", plot = "umap")
+p + ggplot2::theme_minimal()
 ```
 
-`fm_plot()` 返回可继续调整的 ggplot2 对象。
+`model_dir` must point to a directory containing `fmverse.json` and every resource listed in that file. For UCE, `species` can be supplied to select one of the bundled species assets; the manifest default is human.
 
-## 主要对象与访问函数
+## Main object
 
-`fmverse()` 返回 S4 `fmobj`。同一个对象可以追加多个模型或 checkpoint 的运行结果。
+`fmverse()` returns an S4 `fmobj`. Repeated calls can add runs for different models or checkpoints to the same object.
 
-- `obj@seurat`：唯一的 Seurat v5 对象，保存原始表达数据、细胞元数据和各 run 的 embedding reduction。输入 Seurat v4 对象会在内部转换。
-- `obj@runs`：按 `run_id` 保存模型与 checkpoint 信息、细胞顺序、预处理和权重审计信息，以及该 run 的下游分析结果。
-- `obj@active_run`：未显式指定 `run_id` 时，下游函数使用的 run。
-- `obj@history`：模型推理及下游分析的调用记录。
-
-常用访问函数：
-
-| 函数 | 返回内容 |
+| Component / accessor | Contents |
 | --- | --- |
-| `fm_runs(obj)` | 所有 run 的摘要 |
-| `fm_run(obj, run_id)` | 指定 run 的记录 |
-| `fm_seurat(obj)` | 共享的 Seurat 对象 |
-| `fm_embeddings(obj, run_id)` | 指定 run 的 embedding |
-| `fm_analysis(obj, run_id, task)` | 指定分析的结果与参数 |
-| `fm_plot(obj, run_id, task, plot)` | 可编辑的 ggplot2 图 |
-| `fm_use(obj, run_id)` | 设置默认 active run |
+| `obj@seurat` / `fm_seurat(obj)` | One shared Seurat v5 object containing the expression data, metadata, and reductions for each run. Seurat v4 inputs are converted internally. |
+| `obj@runs` / `fm_run(obj, run_id)` | Per-run model and checkpoint metadata, cell order, preprocessing and weight audit information, and downstream analysis records. |
+| `obj@active_run` / `fm_use(obj, run_id)` | The run selected by default when a downstream function does not receive `run_id`. |
+| `obj@history` / `fm_runs(obj)` | Recorded operations and a summary of available runs. |
+| `fm_embeddings(obj, run_id)` | Embedding matrix for the selected run. |
+| `fm_analysis(obj, run_id, task)` | Stored analysis tables, parameters, and metrics. |
+| `fm_plot(obj, run_id, task, plot)` | A ggplot2 object that can be further customized and saved by the user. |
 
-
+Analyses and plots are stored by run. Plot functions return ggplot2 objects and do not write files.
