@@ -1,0 +1,63 @@
+
+R version 4.4.0 (2024-04-24 ucrt) -- "Puppy Cup"
+Copyright (C) 2024 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> library(testthat)
+> library(fmverse)
+> 
+> test_check("fmverse")
+Validating object structure
+Updating object slots
+Ensuring keys are in the proper structure
+Ensuring keys are in the proper structure
+Ensuring feature names don't have underscores or pipes
+Updating slots in RNA
+Validating object structure for Assay 'RNA'
+Object representation is consistent with the most current Seurat version
+
+
+Validating object structure
+Updating object slots
+Ensuring keys are in the proper structure
+Updating matrix keys for DimReduc 'scGPT'
+Ensuring keys are in the proper structure
+Ensuring feature names don't have underscores or pipes
+Updating slots in RNA
+Updating slots in scGPT
+Validating object structure for Assay 'RNA'
+Validating object structure for DimReduc 'scGPT'
+Object representation is consistent with the most current Seurat version
+Validating object structure
+Updating object slots
+Ensuring keys are in the proper structure
+Updating matrix keys for DimReduc 'scGPT'
+Ensuring keys are in the proper structure
+Ensuring feature names don't have underscores or pipes
+Updating slots in RNA
+Updating slots in scGPT
+Validating object structure for Assay 'RNA'
+Validating object structure for DimReduc 'scGPT'
+Object representation is consistent with the most current Seurat version
+--> No gene can be mapped....
+--> Expected input gene ID: PRMT1,HELQ,EXOSC3,ZRANB3,MIURF,XNDC1N
+--> return NULL...
+[ FAIL 0 | WARN 35 | SKIP 0 | PASS 272 ]
+
+[ FAIL 0 | WARN 35 | SKIP 0 | PASS 272 ]
+> 
+> proc.time()
+   user  system elapsed 
+  82.03    7.85   93.20 

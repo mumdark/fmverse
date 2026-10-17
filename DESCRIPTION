@@ -1,0 +1,32 @@
+Package: fmverse
+Title: R-Native Runtime for Single-Cell Foundation Models
+Version: 0.0.0.9005
+Authors@R: person("fmverse", "contributors", role = c("aut", "cre"), email = "maintainers@example.org")
+Author: fmverse contributors [aut, cre]
+Maintainer: fmverse contributors <maintainers@example.org>
+Description: Loads selected pretrained single-cell foundation models into torch for R
+    and applies them to Seurat objects with reproducible preprocessing.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Depends: R (>= 4.3.0)
+Imports:
+    digest,
+    ggplot2,
+    jsonlite,
+    Matrix,
+    methods,
+    rlang,
+    safetensors,
+    Seurat (>= 5.0.0),
+    SeuratObject (>= 5.0.0),
+    torch,
+    zip
+Suggests:
+    clusterProfiler,
+    harmony,
+    leidenbase,
+    org.Hs.eg.db,
+    slingshot,
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+RoxygenNote: 7.3.1

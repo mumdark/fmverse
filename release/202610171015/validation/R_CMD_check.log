@@ -1,0 +1,204 @@
+* using log directory 'E:/#vibeCode_project/07RscFun/release/check-final/fmverse.Rcheck'
+* using R version 4.4.0 (2024-04-24 ucrt)
+* using platform: x86_64-w64-mingw32
+* R was compiled by
+    gcc.exe (GCC) 13.2.0
+    GNU Fortran (GCC) 13.2.0
+* running under: Windows 11 x64 (build 26200)
+* using session charset: ASCII
+* using options '--no-manual --no-build-vignettes'
+* checking for file 'fmverse/DESCRIPTION' ... OK
+* this is package 'fmverse' version '0.0.0.9005'
+* package encoding: UTF-8
+* checking package namespace information ... OK
+* checking package dependencies ... OK
+* checking if this is a source package ... OK
+* checking if there is a namespace ... OK
+* checking for executable files ... OK
+* checking for hidden files and directories ... OK
+* checking for portable file names ... OK
+* checking whether package 'fmverse' can be installed ... OK
+* checking installed package size ... NOTE
+  installed size is  6.5Mb
+  sub-directories of 1Mb or more:
+    R   6.1Mb
+* checking package directory ... OK
+* checking DESCRIPTION meta-information ... OK
+* checking top-level files ... OK
+* checking for left-over files ... OK
+* checking index information ... OK
+* checking package subdirectories ... OK
+* checking code files for non-ASCII characters ... OK
+* checking R files for syntax errors ... OK
+* checking whether the package can be loaded ... OK
+* checking whether the package can be loaded with stated dependencies ... OK
+* checking whether the package can be unloaded cleanly ... OK
+* checking whether the namespace can be loaded with stated dependencies ... NOTE
+Warning: no function found corresponding to methods exports from 'fmverse' for: 'show'
+
+A namespace must be able to be loaded with just the base namespace
+loaded: otherwise if the namespace gets loaded by a saved object, the
+session will be unable to start.
+
+Probably some imports need to be declared in the NAMESPACE file.
+* checking whether the namespace can be unloaded cleanly ... OK
+* checking loading without being on the library search path ... OK
+* checking dependencies in R code ... OK
+* checking S3 generic/method consistency ... OK
+* checking replacement functions ... OK
+* checking foreign function calls ... OK
+* checking R code for possible problems ... NOTE
+.fm_annotate_legacy: no visible binding for global variable 'Freq'
+.fm_cluster_legacy: no visible global function definition for 'tail'
+.fm_dispatch: no visible global function definition for 'tail'
+.fm_drug_response_legacy: no visible global function definition for
+  'predict'
+.fm_drug_response_legacy: no visible binding for global variable
+  'specificity'
+.fm_drug_response_legacy: no visible binding for global variable
+  'sensitivity'
+.fm_drug_response_legacy: no visible binding for global variable
+  'predicted_response'
+.fm_enrich_legacy: no visible binding for global variable 'x'
+.fm_enrich_legacy: no visible binding for global variable 'y'
+.fm_enrich_legacy: no visible binding for global variable 'label'
+.fm_enrich_legacy: no visible binding for global variable 'cluster'
+.fm_enrich_legacy: no visible binding for global variable 'Description'
+.fm_enrich_legacy: no visible binding for global variable 'Count'
+.fm_enrich_legacy: no visible binding for global variable 'p.adjust'
+.fm_enrich_legacy: no visible binding for global variable 'pathway'
+.fm_grn_legacy: no visible binding for global variable 'x'
+.fm_grn_legacy: no visible binding for global variable 'y'
+.fm_grn_legacy: no visible binding for global variable 'xend'
+.fm_grn_legacy: no visible binding for global variable 'yend'
+.fm_grn_legacy: no visible binding for global variable 'weight'
+.fm_grn_legacy: no visible binding for global variable 'label'
+.fm_markers_legacy: no visible binding for global variable '.data'
+.fm_markers_legacy: no visible binding for global variable
+  'neg_log10_p'
+.fm_markers_legacy: no visible binding for global variable
+  'significant'
+.fm_markers_legacy: no visible binding for global variable 'gene'
+.fm_markers_legacy: no visible binding for global variable 'group'
+.fm_markers_legacy: no visible binding for global variable 'percent'
+.fm_markers_legacy: no visible binding for global variable 'average'
+.fm_perturb_legacy: no visible global function definition for 'head'
+.fm_perturb_legacy: no visible binding for global variable
+  'perturbation'
+.fm_perturb_legacy: no visible binding for global variable
+  'predicted_effect'
+.fm_reconstruct_legacy: no visible binding for global variable
+  'predicted'
+.fm_trajectory_legacy: no visible binding for global variable 'UMAP_1'
+.fm_trajectory_legacy: no visible binding for global variable 'UMAP_2'
+.fm_trajectory_legacy: no visible binding for global variable 'y'
+.fm_trajectory_legacy: no visible binding for global variable 'cluster'
+.fm_trajectory_legacy: no visible binding for global variable 'lineage'
+fmverse_geneformer_model : <anonymous>: no visible binding for global
+  variable 'self'
+fmverse_geneformer_perturb: no visible global function definition for
+  'aggregate'
+fmverse_geneformer_perturb: no visible binding for global variable
+  'perturbation'
+fmverse_geneformer_perturb: no visible binding for global variable
+  'predicted_effect'
+fmverse_geneformer_reconstruct: no visible binding for global variable
+  'position'
+fmverse_geneformer_tokenize: no visible global function definition for
+  'setNames'
+fmverse_scbert_tokenize: no visible global function definition for
+  'head'
+fmverse_scgpt_keymap: no visible global function definition for
+  'setNames'
+fmverse_umap_plot: no visible binding for global variable 'UMAP_1'
+fmverse_umap_plot: no visible binding for global variable 'UMAP_2'
+fmverse_umap_plot: no visible binding for global variable 'colour'
+Undefined global functions or variables:
+  .data Count Description Freq UMAP_1 UMAP_2 aggregate average cluster
+  colour gene group head label lineage neg_log10_p p.adjust pathway
+  percent perturbation position predict predicted predicted_effect
+  predicted_response self sensitivity setNames significant specificity
+  tail weight x xend y yend
+Consider adding
+  importFrom("stats", "aggregate", "p.adjust", "predict", "setNames")
+  importFrom("utils", "head", "tail")
+to your NAMESPACE file.
+* checking Rd files ... OK
+* checking Rd metadata ... WARNING
+Rd files with duplicated alias 'as_fmobj':
+  'as_fmobj.Rd' 'fmobj.Rd'
+Rd files with duplicated alias 'fm_analysis':
+  'fm_analysis.Rd' 'fmobj.Rd'
+Rd files with duplicated alias 'fm_embeddings':
+  'fm_embeddings.Rd' 'fmobj.Rd'
+Rd files with duplicated alias 'fm_plot':
+  'fm_plot.Rd' 'fmobj.Rd'
+Rd files with duplicated alias 'fm_run':
+  'fm_run.Rd' 'fmobj.Rd'
+Rd files with duplicated alias 'fm_runs':
+  'fm_runs.Rd' 'fmobj.Rd'
+Rd files with duplicated alias 'fm_seurat':
+  'fm_seurat.Rd' 'fmobj.Rd'
+Rd files with duplicated alias 'fm_use':
+  'fm_use.Rd' 'fmobj.Rd'
+Rd files with duplicated alias 'fmverse_load_scbert_weights':
+  'fmverse-model-adapters.Rd' 'fmverse_load_scbert_weights.Rd'
+Rd files with duplicated alias 'fmverse_load_scfoundation_weights':
+  'fmverse-model-adapters.Rd' 'fmverse_load_scfoundation_weights.Rd'
+Rd files with duplicated alias 'fmverse_scbert_build_model':
+  'fmverse-model-adapters.Rd' 'fmverse_scbert_build_model.Rd'
+Rd files with duplicated alias 'fmverse_scbert_checkpoints':
+  'fmverse-model-adapters.Rd' 'fmverse_scbert_checkpoints.Rd'
+Rd files with duplicated alias 'fmverse_scfoundation_build_model':
+  'fmverse-model-adapters.Rd' 'fmverse_scfoundation_build_model.Rd'
+Rd files with duplicated alias 'fmverse_scfoundation_checkpoints':
+  'fmverse-model-adapters.Rd' 'fmverse_scfoundation_checkpoints.Rd'
+* checking Rd cross-references ... OK
+* checking for missing documentation entries ... WARNING
+Undocumented code objects:
+  'fm_annotate' 'fm_cluster' 'fm_drug_response' 'fm_enrich' 'fm_grn'
+  'fm_integrate' 'fm_markers' 'fm_perturb' 'fm_reconstruct'
+  'fm_trajectory' 'fmverse_geneformer_keymap'
+  'fmverse_prepare_scgpt_checkpoint' 'fmverse_scgpt_tokenize'
+All user-level objects in a package should have documentation entries.
+See chapter 'Writing R documentation files' in the 'Writing R
+Extensions' manual.
+* checking for code/documentation mismatches ... OK
+* checking Rd \usage sections ... WARNING
+Undocumented arguments in Rd file 'as_fmobj.Rd'
+  'object' 'run_id'
+
+Undocumented arguments in Rd file 'fm_analysis.Rd'
+  'object' 'run_id' 'task' 'allow_stale'
+
+Undocumented arguments in Rd file 'fm_embeddings.Rd'
+  'object' 'run_id' 'embedding'
+
+Undocumented arguments in Rd file 'fm_plot.Rd'
+  'object' 'run_id' 'task' 'plot' 'allow_stale'
+
+Undocumented arguments in Rd file 'fm_run.Rd'
+  'object' 'run_id'
+
+Undocumented arguments in Rd file 'fm_runs.Rd'
+  'object'
+
+Undocumented arguments in Rd file 'fm_seurat.Rd'
+  'object'
+
+Undocumented arguments in Rd file 'fm_use.Rd'
+  'object' 'run_id'
+
+Functions with \usage entries need to have the appropriate \alias
+entries, and all their arguments documented.
+The \usage entries must correspond to syntactically valid R code.
+See chapter 'Writing R documentation files' in the 'Writing R
+Extensions' manual.
+* checking Rd contents ... OK
+* checking for unstated dependencies in examples ... OK
+* checking examples ... OK
+* checking for unstated dependencies in 'tests' ... OK
+* checking tests ... OK
+  Running 'testthat.R'
+* DONE
+Status: 3 WARNINGs, 3 NOTEs
